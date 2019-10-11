@@ -1,0 +1,28 @@
+{
+  "name": "v12-solo-yuukisaan-be",
+  "version": "1.0.0",
+  "description": "V12 Solo Project Backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chingu-voyages/v12-solo-yuukisaan-be.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chingu-voyages/v12-solo-yuukisaan-be/issues"
+  },
+  "homepage": "https://github.com/chingu-voyages/v12-solo-yuukisaan-be#readme",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.7.4",
+    "nodemon": "^1.19.3"
+  }
+}
