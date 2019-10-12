@@ -3,9 +3,10 @@ const router = express.Router();
 const axios = require("axios");
 const { BASE_URL } = require("../constants/baseUrl");
 
-router.get("/search", async (req, res) => {
-  const { query, page = 1 } = req.query;
+router.get("/search", async (req, res, next) => {
   try {
+    const { query, page = 1 } = req.query;
+
     const response = await axios.get(`${BASE_URL}/search/movie`, {
       params: {
         api_key: process.env.API_KEY,
@@ -15,11 +16,12 @@ router.get("/search", async (req, res) => {
     });
     res.json(response.data);
   } catch (err) {
-    res.send(err.message).status(404);
+
+    next(err.response.data);
   }
 });
 
-router.get("/trailer/:id", async (req, res) => {
+router.get("/trailers/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
     const response = await axios.get(`${BASE_URL}/movie/${id}/videos`, {
@@ -27,9 +29,16 @@ router.get("/trailer/:id", async (req, res) => {
         api_key: process.env.API_KEY
       }
     });
-    res.json(response.data);
+    const newMovies = response.data.results.map(movie => {
+      const {name, key} = movie;
+      return {
+        name,
+        youtube: `https://www.youtube.com/watch?v=${key}`
+      }
+    })
+    res.json(newMovies);
   } catch (err) {
-    res.send("no trailers").status(404);
+    next(err.response.data);
   }
 });
 

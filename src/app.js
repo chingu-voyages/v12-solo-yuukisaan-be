@@ -8,8 +8,14 @@ const moviesRoute = require("./routes/movies");
 
 app.use(express.json());
 app.use(cors());
-app.use("/movies",moviesRoute);
+app.use("/movies", moviesRoute);
+
+
 
 app.listen(PORT, () => {
   console.log(`Server is listening on Port ${PORT}`);
+});
+
+app.use((err, req, res, next) => {
+  res.send(err).status(404);
 });
