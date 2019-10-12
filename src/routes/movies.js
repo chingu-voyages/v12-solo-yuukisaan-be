@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 const { BASE_URL } = require("../constants/baseUrl");
+const mapMovies = require("../helper/mapMovies");
 
 router.get("/search", async (req, res, next) => {
   try {
@@ -14,22 +15,9 @@ router.get("/search", async (req, res, next) => {
         page: page
       }
     });
-    const movies = response.data.results.map(movie => {
-      const {poster_path , popularity , id , title , release_date} = movie
-      return {
-        poster : {
-          desktop: `http://image.tmdb.org/t/p/w342/${poster_path}`,
-          mobile: `http://image.tmdb.org/t/p/w185/${poster_path}`
-        },
-        likes: popularity,
-        id,
-        title,
-        release_date
-      }
-    })
+    const movies = mapMovies(response.data.results);
     res.json(movies);
   } catch (err) {
-
     next(err.response.data);
   }
 });
@@ -43,15 +31,29 @@ router.get("/trailers/:id", async (req, res, next) => {
       }
     });
     const newMovies = response.data.results.map(movie => {
-      const {name, key} = movie;
+      const { name, key } = movie;
       return {
         name,
         youtube: `https://www.youtube.com/watch?v=${key}`
-      }
-    })
+      };
+    });
     res.json(newMovies);
   } catch (err) {
     next(err.response.data);
+  }
+});
+
+router.get("/current_movies", async (req, res, next) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/movie/now_playing`, {
+      params: {
+        api_key: process.env.API_KEY
+      }
+    });
+    const movies = mapMovies(response.data.results);
+    res.json(movies);
+  } catch (err) {
+      next(err.response.data);
   }
 });
 
