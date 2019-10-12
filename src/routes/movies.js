@@ -14,7 +14,20 @@ router.get("/search", async (req, res, next) => {
         page: page
       }
     });
-    res.json(response.data);
+    const movies = response.data.results.map(movie => {
+      const {poster_path , popularity , id , title , release_date} = movie
+      return {
+        poster : {
+          desktop: `http://image.tmdb.org/t/p/w342/${poster_path}`,
+          mobile: `http://image.tmdb.org/t/p/w185/${poster_path}`
+        },
+        likes: popularity,
+        id,
+        title,
+        release_date
+      }
+    })
+    res.json(movies);
   } catch (err) {
 
     next(err.response.data);
