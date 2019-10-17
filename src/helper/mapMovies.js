@@ -1,6 +1,6 @@
 const mapMovies = movies => {
     return movies.map(movie => {
-        const { poster_path, popularity, id, title, release_date , backdrop_path} = movie;
+        const { poster_path, popularity, id, title, release_date , backdrop_path, overview} = movie;
         return {
           poster: {
             backdrop: `http://image.tmdb.org/t/p/original/${backdrop_path}`,
@@ -9,7 +9,8 @@ const mapMovies = movies => {
           likes: popularity,
           id,
           title,
-          release_date
+          release_date,
+          overview
         };
       });
 }
