@@ -1,10 +1,10 @@
 const mapMovies = movies => {
     return movies.map(movie => {
-        const { poster_path, popularity, id, title, release_date } = movie;
+        const { poster_path, popularity, id, title, release_date , backdrop_path} = movie;
         return {
           poster: {
-            desktop: `http://image.tmdb.org/t/p/w342/${poster_path}`,
-            mobile: `http://image.tmdb.org/t/p/w185/${poster_path}`
+            backdrop: `http://image.tmdb.org/t/p/w185/${backdrop_path}`,
+            poster: `http://image.tmdb.org/t/p/w185/${poster_path}`
           },
           likes: popularity,
           id,
