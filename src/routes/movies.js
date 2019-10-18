@@ -66,7 +66,18 @@ router.get("/movie_info/:id", async (req, res, next) => {
         api_key: process.env.API_KEY
       }
     });
-    res.json(response.data);
+    const { backdrop_path, genres, poster_path, overview, release_date, production_companies } = response.data
+    const newResponse = {
+      poster: {
+        backdrop: `http://image.tmdb.org/t/p/original/${backdrop_path}`,
+        poster: `http://image.tmdb.org/t/p/w92/${poster_path}`
+      },
+      genres,
+      overview,
+      release_date,
+      production_companies
+    }
+    res.json(newResponse);
   } catch (err) {
     next(err.response.data);
   }
