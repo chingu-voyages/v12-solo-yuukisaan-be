@@ -53,8 +53,23 @@ router.get("/current_movies", async (req, res, next) => {
     const movies = mapMovies(response.data.results);
     res.json(movies);
   } catch (err) {
-      next(err.response.data);
+    next(err.response.data);
   }
 });
+
+
+router.get("/movie_info/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const response = await axios.get(`${BASE_URL}/movie/${id}`, {
+      params: {
+        api_key: process.env.API_KEY
+      }
+    });
+    res.json(response.data);
+  } catch (err) {
+    next(err.response.data);
+  }
+})
 
 module.exports = router;
