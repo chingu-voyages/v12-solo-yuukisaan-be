@@ -34,7 +34,7 @@ router.get("/trailers/:id", async (req, res, next) => {
       const { name, key } = movie;
       return {
         name,
-        youtube: `https://www.youtube.com/watch?v=${key}`
+        youtube: `https://www.youtube.com/embed/${key}`
       };
     });
     res.json(newMovies);
