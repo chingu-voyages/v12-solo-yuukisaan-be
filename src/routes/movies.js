@@ -67,7 +67,7 @@ router.get("/movie_info/:id", async (req, res, next) => {
       }
     });
     const { backdrop_path, genres, poster_path, overview, release_date, production_companies, original_title
-    ,runtime ,  production_countries, vote_count
+      , runtime, production_countries, vote_count
     } = response.data
     const newResponse = {
       poster: {
@@ -84,6 +84,20 @@ router.get("/movie_info/:id", async (req, res, next) => {
       vote_count
     }
     res.json(newResponse);
+  } catch (err) {
+    next(err.response.data);
+  }
+})
+
+router.get("/movie_cast/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const response = await axios.get(`${BASE_URL}/movie/${id}/credits`, {
+      params: {
+        api_key: process.env.API_KEY
+      }
+    });
+    res.json(response.data.cast);
   } catch (err) {
     next(err.response.data);
   }
