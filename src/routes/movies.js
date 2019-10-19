@@ -70,7 +70,7 @@ router.get("/movie_info/:id", async (req, res, next) => {
     const newResponse = {
       poster: {
         backdrop: `http://image.tmdb.org/t/p/original/${backdrop_path}`,
-        poster: `http://image.tmdb.org/t/p/w92/${poster_path}`
+        poster: `http://image.tmdb.org/t/p/w185/${poster_path}`
       },
       genres,
       overview,
