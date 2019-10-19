@@ -97,7 +97,15 @@ router.get("/movie_cast/:id", async (req, res, next) => {
         api_key: process.env.API_KEY
       }
     });
-    res.json(response.data.cast);
+    const movieCast = response.data.cast.map(data => {
+      const { character, name, profile_path } = data;
+      return {
+        profile_image: `https://image.tmdb.org/t/p/original/${profile_path}`,
+        character,
+        name
+      }
+    })
+    res.json(movieCast);
   } catch (err) {
     next(err.response.data);
   }
