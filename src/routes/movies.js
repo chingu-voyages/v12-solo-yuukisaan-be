@@ -36,7 +36,8 @@ router.get("/trailers/:id", async (req, res, next) => {
         name,
         youtube: `https://www.youtube.com/embed/${key}`
       };
-    });
+    })
+
     res.json(newMovies);
   } catch (err) {
     next(err.response.data);
@@ -97,7 +98,9 @@ router.get("/movie_cast/:id", async (req, res, next) => {
         api_key: process.env.API_KEY
       }
     });
-    const movieCast = response.data.cast.map(data => {
+    const movieCast = response.data.cast.filter(data => {
+      return data.profile_path;
+    }).map(data => {
       const { character, name, profile_path } = data;
       return {
         profile_image: `https://image.tmdb.org/t/p/original/${profile_path}`,
