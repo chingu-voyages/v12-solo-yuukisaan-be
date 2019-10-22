@@ -58,6 +58,36 @@ router.get("/current_movies", async (req, res, next) => {
   }
 });
 
+router.get("/popular_movies", async (req, res, next) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/movie/popular`, {
+      params: {
+        api_key: process.env.API_KEY
+      }
+    });
+    const movies = mapMovies(response.data.results);
+    res.json(movies);
+
+  } catch (err) {
+    next(err.response.data);
+  }
+})
+
+
+
+router.get("/:id/movie_review", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const response = await axios.get(`${BASE_URL}/movie/${id}/reviews`, {
+      params: {
+        api_key: process.env.API_KEY
+      }
+    })
+    res.json(response.data.results);
+  } catch (err) {
+    next(err.response);
+  }
+})
 
 router.get("/movie_info/:id", async (req, res, next) => {
   try {
