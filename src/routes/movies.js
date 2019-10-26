@@ -1,9 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const axios = require("axios");
-const { BASE_URL } = require("../constants/baseUrl");
-const mapMovies = require("../helper/mapMovies");
-
 const ctrl = require("../Controllers/movie.controller");
 
 
